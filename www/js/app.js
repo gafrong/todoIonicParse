@@ -15,22 +15,44 @@ angular.module('todoApp', ['ionic','todoApp.controllers','todoApp.services'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    Parse.initialize("EaseV77vdYgyCEqOlFPS5VCOCrNxCgq09IQ6Sna3", "nOxmZUixvj9qbctsOxipofgHZkudIEe8ZWFvGO1S");
+
     $state.go('todos');
   });
 })
-.config(function($stateProvider){
-        $stateProvider.state('todos',{
+.config(function($stateProvider, $urlRouterProvider){
+        $stateProvider
+        .state('login', {
+          url: '/',
+          templateUrl: 'templates/login.html',
+          controller: 'LoginCtrl'
+        })
+        .state('signup', {
+          url: '/signup',
+          templateUrl: 'templates/signup.html',
+          controller: 'LoginCtrl'
+        })
+        .state('signin', {
+          url: '/signin',
+          templateUrl: 'templates/signin.html',
+          controller: 'LoginCtrl'
+        })
+        .state('todos',{
            url:'/todos',
            controller:'TodoListController',
            templateUrl:'views/todos.html',
            cache: false
-        }).state('createTodo',{
+        })
+        .state('createTodo',{
             url:'/todo/new',
             controller:'TodoCreationController',
             templateUrl:'views/create-todo.html'
-        }).state('editTodo',{
+        })
+        .state('editTodo',{
             url:'/todo/edit/:id/:content',
             controller:'TodoEditController',
             templateUrl:'views/edit-todo.html'
         });
+
+        $urlRouterProvider.otherwise("/");
 });
